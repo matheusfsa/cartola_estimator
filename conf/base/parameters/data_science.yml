@@ -1,0 +1,24 @@
+# This is a boilerplate parameters config generated for pipeline data_science
+# using Kedro 0.18.0.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://kedro.readthedocs.io/en/0.18.0/kedro_project_setup/configuration.html#parameters
+fold:
+  class: sklearn.model_selection.KFold
+  kwargs:
+    n_splits: 2
+
+models:
+    ridge:
+      model_class: sklearn.linear_model.Ridge
+      default_args: null
+      params_search:
+          class: sklearn.model_selection.RandomizedSearchCV
+          kwargs:
+            n_iter: 2
+          params:
+              alpha:
+                class: scipy.stats.loguniform
+                kwargs:
+                  a: 0.05
+                  b: 10.0

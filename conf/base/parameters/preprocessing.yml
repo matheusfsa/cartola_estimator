@@ -1,0 +1,18 @@
+# This is a boilerplate parameters config generated for pipeline 'preprocessing'
+# using Kedro 0.18.0.
+#
+# Documentation for this file format can be found in "Parameters"
+# Link: https://kedro.readthedocs.io/en/0.18.0/kedro_project_setup/configuration.html#parameters
+
+feature_columns: [clube, oponente, atletas_posicao_id]
+window: 5
+
+drop_columns: ['atletas_nome', 'atletas_slug', 'atletas_apelido', 'atletas_foto',
+               'atletas_atleta_id', 'atletas_rodada_id', 'atletas_clube_id',
+               'atletas_posicao_id', 'atletas_status_id', 'atletas_pontos_num',
+               'atletas_preco_num', 'atletas_variacao_num', 'atletas_media_num',
+               'atletas_clube_id_full_name', 'atletas_jogos_num', 'atletas_minimo_para_valorizar',
+               'clube', 'time_idx', 'vencedor','mando', 'mandante', 'visitante', 'oponente', 'resultado']
+id_columns: [time_idx, rodada, ano, clube, atletas_slug, oponente, atletas_posicao_id]
+
+test_size: 0.3

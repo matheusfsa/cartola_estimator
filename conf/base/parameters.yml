@@ -1,0 +1,57 @@
+stats:
+  gol:
+    id: G
+    pos: [gol, zag, lat, mei, ata]
+  assistencias:
+    id: A
+    pos: [gol, zag, lat, mei, ata]
+  finalizacao_def:
+    id: FD
+    pos: [gol, zag, lat, mei, ata]
+  finalizacao_fora:
+    id: FF
+    pos: [gol, zag, lat, mei, ata]
+  falta_sofrida:
+    id: FS
+    pos: [gol, zag, lat, mei, ata]
+  impedimento:
+    id: I
+    pos: [gol, zag, lat, mei, ata]
+  passe_incompleto:
+    id: PI
+    pos: [gol, zag, lat, mei, ata]
+  penalti_sofrido:
+    id: PS
+    pos: [gol, zag, lat, mei, ata]
+  saldo_gols:
+    id: SG
+    pos: [gol, zag, lat, mei, ata]
+  defesa:
+    id: DE
+    pos: [gol]
+  desarme:
+    id: DS
+    pos: [gol, zag, lat, mei, ata]
+  gol_contra:
+    id: GC
+    pos: [gol, zag, lat, mei, ata]
+  vermelho:
+    id: CV
+    pos: [gol, zag, lat, mei, ata]
+  amarelo:
+    id: CA
+    pos: [gol, zag, lat, mei, ata]
+  falta_cometida:
+    id: FC
+    pos: [gol, zag, lat, mei, ata]
+  penalti_cometido:
+    id: PC
+    pos: [gol, zag, lat, mei, ata]
+
+  #penalti_perdido:
+  #  id: PP
+  #  pos: [gol, zag, lat, mei, ata]
+  #defesa_penalti:
+  #  id: DP
+  #  pos: [gol]
+random_seed: 42
