@@ -59,7 +59,7 @@ def create_target_data(
     target = pd.DataFrame()
     stats = [stat["id"] for k, stat in stats_dict.items()]
     atleta_acc = data[data['atletas_posicao_id'] != 'tec']
-    for _, g_data in atleta_acc.groupby(['ano', 'atletas_slug', 'clube']):
+    for _, g_data in atleta_acc.groupby(['ano', 'atletas_slug', 'clube'], sort=False):
         players_stats = g_data.sort_values("rodada")
         players_stats[stats] = players_stats[stats].fillna(0).diff()
         target = pd.concat((target, players_stats), ignore_index=True)
@@ -91,7 +91,7 @@ def create_hist_features(
 def _hist_features(data, col, window, stats):
 
     group_stats = (data.groupby(['time_idx', 'rodada', 'ano', col])\
-                    .sum()[stats].reset_index())
+                    .mean()[stats].reset_index())
 
     hist_stats = (group_stats.set_index("time_idx").groupby([col])\
                   .rolling(window=window, min_periods=1).mean()[stats].reset_index())
