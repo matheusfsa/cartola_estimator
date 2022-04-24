@@ -16,3 +16,4 @@ drop_columns: ['atletas_nome', 'atletas_slug', 'atletas_apelido', 'atletas_foto'
 id_columns: [time_idx, rodada, ano, clube, atletas_slug, oponente, atletas_posicao_id]
 
 test_size: 0.3
+val_size: 0.3

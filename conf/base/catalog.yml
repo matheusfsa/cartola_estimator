@@ -46,6 +46,11 @@ test_data:
   type: pandas.ParquetDataSet
   filepath: data/04_feature/test_data.parquet
 
+val_data:
+  type: pandas.ParquetDataSet
+  filepath: data/04_feature/val_data.parquet
+
+
 cartola_estimator:
   type: pickle.PickleDataSet
   filepath: data/06_models/cartola_estimator.pk

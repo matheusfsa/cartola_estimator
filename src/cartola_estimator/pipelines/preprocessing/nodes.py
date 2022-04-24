@@ -126,9 +126,10 @@ def _hist_features(data, col, window, stats):
     return data
 
 
-def split_test(
-    data: pd.DataFrame, test_size: float, random_seed: int
+def split_test_val(
+    data: pd.DataFrame, test_size: float, val_size: float, random_seed: int
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
     """This node split data in train/test."""
     train, test = train_test_split(data, test_size=test_size, random_state=random_seed)
-    return train, test
+    train, val = train_test_split(train, test_size=val_size, random_state=random_seed)
+    return train, val, test
