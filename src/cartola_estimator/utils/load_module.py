@@ -1,17 +1,14 @@
 from typing import Any, Dict, Optional
 from importlib import import_module
 
-def import_class(
-    class_path: str
-):
+
+def import_class(class_path: str):
     lib, _, class_name = class_path.rpartition(".")
     lib = import_module(lib)
     return getattr(lib, class_name)
 
-def import_model(
-    model_name: str,
-    default_args: Optional[Dict[str, Any]] =None
-    ) -> Any:
+
+def import_model(model_name: str, default_args: Optional[Dict[str, Any]] = None) -> Any:
     """
     This function load model from string
     Args:

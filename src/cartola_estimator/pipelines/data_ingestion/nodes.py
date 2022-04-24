@@ -13,13 +13,31 @@ import pandas as pd
 from tqdm import tqdm
 
 _TEAMS = {
-        '373': "Atlético-GO", '293': 'Athlético-PR', '282': 'Atlético-MG',
-        '284': 'Grêmio', '276':'São Paulo', '265': 'Bahia', '266': 'Fluminense',
-        '356': 'Fortaleza', '264': 'Corinthians','354': 'Ceará',
-        '267': 'Vasco', '263': 'Botafogo', '290': 'Goiás', '292': 'Sport',
-        '285': 'Internacional' , '275': 'Palmeiras', '280': 'Bragantino', '262': 'Flamengo',
-        '1371': 'Cuiabá', '315':'Chapecoense', '327':'América-MG', '286':'Juventude', '277': 'Santos'
-    }
+    "373": "Atlético-GO",
+    "293": "Athlético-PR",
+    "282": "Atlético-MG",
+    "284": "Grêmio",
+    "276": "São Paulo",
+    "265": "Bahia",
+    "266": "Fluminense",
+    "356": "Fortaleza",
+    "264": "Corinthians",
+    "354": "Ceará",
+    "267": "Vasco",
+    "263": "Botafogo",
+    "290": "Goiás",
+    "292": "Sport",
+    "285": "Internacional",
+    "275": "Palmeiras",
+    "280": "Bragantino",
+    "262": "Flamengo",
+    "1371": "Cuiabá",
+    "315": "Chapecoense",
+    "327": "América-MG",
+    "286": "Juventude",
+    "277": "Santos",
+}
+
 
 def load_cartola_data(years: List[int]) -> pd.DataFrame:
     """
@@ -50,13 +68,17 @@ def load_cartola_data(years: List[int]) -> pd.DataFrame:
 
     unused_cols = ["athletes$atletas$scout"]
     cartola_data = cartola_data.drop(columns=unused_cols, errors="ignore")
-    cartola_data["atletas.clube.id.full.name"] = cartola_data["atletas.clube.id.full.name"].astype(str).replace(_TEAMS)
+    cartola_data["atletas.clube.id.full.name"] = (
+        cartola_data["atletas.clube.id.full.name"].astype(str).replace(_TEAMS)
+    )
     cartola_data = cartola_data.rename(columns=replace_sep)
     return cartola_data
+
 
 def replace_sep(x):
     """This function remove prefix with '.'"""
     return x.replace(".", "_")
+
 
 class CartolaFiles:
     """
@@ -118,7 +140,9 @@ def _process_mercado(ano, rodada, url):
                 atleta_data[f"atletas.{k}"] = [v]
 
         rodada_df = pd.concat((rodada_df, pd.DataFrame(atleta_data)), ignore_index=True)
-    rodada_df["atletas.clube.id.full.name"] = rodada_df["atletas.clube_id"].replace(_TEAMS)
+    rodada_df["atletas.clube.id.full.name"] = rodada_df["atletas.clube_id"].replace(
+        _TEAMS
+    )
     rodada_df["rodada"] = rodada
     rodada_df["ano"] = ano
 

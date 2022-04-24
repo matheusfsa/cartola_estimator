@@ -12,6 +12,7 @@ from kedro.framework.session.session import _active_session
 from kedro.pipeline.modular_pipeline import pipeline
 from .nodes import split_x_y, fit_model, join_models
 
+
 def split_template(name):
     return Pipeline(
         [
@@ -21,14 +22,14 @@ def split_template(name):
                     "data": "train_data",
                     "label": "params:label",
                     "stats_dict": "params:stats",
-                    "id_cols": "params:id_columns"
+                    "id_cols": "params:id_columns",
                 },
                 outputs=["X", "y"],
-                name=f"split_x_y_{name}"
-
+                name=f"split_x_y_{name}",
             )
         ]
     )
+
 
 def fit_template(name):
     return Pipeline(
@@ -42,11 +43,12 @@ def fit_template(name):
                     "fold": "params:fold",
                 },
                 outputs="model",
-                name=f"fit_model_{name}"
-
+                name=f"fit_model_{name}",
             )
         ]
     )
+
+
 def create_pipeline(**kwargs) -> Pipeline:
     session = _active_session.load_context()
     stats = session.catalog.load("params:stats")
@@ -56,7 +58,10 @@ def create_pipeline(**kwargs) -> Pipeline:
         pipeline(
             pipe=split_template(statistic),
             parameters={"params:label": f"params:stats.{statistic}.id"},
-            outputs={"X": f"X_{statistic}", "y": f"y_{statistic}", }
+            outputs={
+                "X": f"X_{statistic}",
+                "y": f"y_{statistic}",
+            },
         )
         for statistic in stats
     ]
@@ -68,9 +73,9 @@ def create_pipeline(**kwargs) -> Pipeline:
             inputs={
                 "X": f"X_{statistic}",
                 "y": f"y_{statistic}",
-                },
+            },
             parameters={"params:models": f"params:models.{model}"},
-            outputs={"model": f"model_{statistic}_{model}"}
+            outputs={"model": f"model_{statistic}_{model}"},
         )
         for statistic, model in product(stats, models)
     ]
@@ -80,9 +85,15 @@ def create_pipeline(**kwargs) -> Pipeline:
         [
             node(
                 func=join_models,
-                inputs=["params:stats",] + [f"model_{statistic}_{model}" for statistic, model in product(stats, models)],
+                inputs=[
+                    "params:stats",
+                ]
+                + [
+                    f"model_{statistic}_{model}"
+                    for statistic, model in product(stats, models)
+                ],
                 outputs="cartola_estimator",
-                name="join_models"
+                name="join_models",
             )
         ]
     )

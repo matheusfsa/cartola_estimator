@@ -10,21 +10,19 @@ from sklearn.base import BaseEstimator
 from cartola_estimator.utils import import_class
 from .models import CartolaEstimator
 
+
 def split_x_y(
-    data: pd.DataFrame,
-    stats_dict: Dict[str, Any],
-    id_cols: List[str],
-    label: str) -> Tuple[pd.DataFrame, pd.Series]:
+    data: pd.DataFrame, stats_dict: Dict[str, Any], id_cols: List[str], label: str
+) -> Tuple[pd.DataFrame, pd.Series]:
     stats = [stat["id"] for k, stat in stats_dict.items()]
     y = data[label]
     X = data.drop(columns=stats + id_cols)
     return X, y
 
+
 def fit_model(
-    X: pd.DataFrame,
-    y: pd.Series,
-    model_dict: Dict[str, Any],
-    fold: Dict[str, Any]) -> pd.DataFrame:
+    X: pd.DataFrame, y: pd.Series, model_dict: Dict[str, Any], fold: Dict[str, Any]
+) -> pd.DataFrame:
     """This node fit a model"""
     X = X.fillna(0)
     y = y.fillna(0)
@@ -40,10 +38,9 @@ def fit_model(
 
     return best_model
 
+
 def _build_search(
-    search_dict: Dict[str, Any],
-    model: BaseEstimator,
-    cv: BaseCrossValidator
+    search_dict: Dict[str, Any], model: BaseEstimator, cv: BaseCrossValidator
 ):
     search_class = import_class(search_dict["class"])
     params = {}
@@ -55,10 +52,8 @@ def _build_search(
     search = search_class(model, params, cv=cv, **search_dict["kwargs"])
     return search
 
-def join_models(
-    stats_dict: Dict[str, Any],
-    *models
-):
+
+def join_models(stats_dict: Dict[str, Any], *models):
     stats = [stat["id"] for k, stat in stats_dict.items()]
     estimators = {}
     for stat, model in zip(stats, models):
