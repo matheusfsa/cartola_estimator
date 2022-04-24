@@ -7,7 +7,7 @@ fold:
   class: sklearn.model_selection.KFold
   kwargs:
     n_splits: 2
-
+columns_to_drop: [time_idx, rodada, ano, clube, atletas_slug, oponente, atletas_posicao_id]
 models:
     ridge:
       model_class: sklearn.linear_model.Ridge
@@ -17,7 +17,7 @@ models:
           kwargs:
             n_iter: 2
           params:
-              alpha:
+              estimator__alpha:
                 class: scipy.stats.loguniform
                 kwargs:
                   a: 0.05
