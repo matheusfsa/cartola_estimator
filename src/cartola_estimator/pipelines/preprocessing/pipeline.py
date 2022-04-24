@@ -4,7 +4,7 @@ generated using Kedro 0.18.0
 """
 
 from kedro.pipeline import Pipeline, node, pipeline
-from .nodes import add_match_info, create_target_data, create_hist_features, split_test
+from .nodes import add_match_info, create_target_data, create_hist_features, split_test_val
 
 
 def create_pipeline(**kwargs) -> Pipeline:
@@ -35,13 +35,14 @@ def create_pipeline(**kwargs) -> Pipeline:
                 name="create_hist_features",
             ),
             node(
-                func=split_test,
+                func=split_test_val,
                 inputs={
                     "data": "feature_data",
                     "test_size": "params:test_size",
+                    "val_size": "params:val_size",
                     "random_seed": "params:random_seed",
                 },
-                outputs=["train_data", "test_data"],
+                outputs=["train_data", "val_data", "test_data"],
                 name="split_test",
             ),
         ]
