@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from tqdm import tqdm
 
+_POSITIONS = {"1": "gol", "2":"lat", "3":"zag", "4":"mei", "5":"ata"}
 _TEAMS = {
     "373": "Atlético-GO",
     "293": "Athlético-PR",
@@ -72,6 +73,8 @@ def load_cartola_data(years: List[int]) -> pd.DataFrame:
         cartola_data["atletas.clube.id.full.name"].astype(str).replace(_TEAMS)
     )
     cartola_data = cartola_data.rename(columns=replace_sep)
+
+
     return cartola_data
 
 
@@ -145,5 +148,5 @@ def _process_mercado(ano, rodada, url):
     )
     rodada_df["rodada"] = rodada
     rodada_df["ano"] = ano
-
+    rodada_df["atletas.posicao_id"] = rodada_df["atletas.posicao_id"].astype(str).replace(_POSITIONS)
     return rodada_df
