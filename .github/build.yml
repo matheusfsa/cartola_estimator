@@ -1,0 +1,21 @@
+on:
+    push:
+        branches:
+            - main
+            - develop
+    pull_request:
+        branches:
+            - main
+            - develop
+jobs:
+  build_test:
+      runs-on: ubuntu-latest
+      steps:
+        - name: CHECKOUT CODE
+            uses: actions/checkout@v2
+        - name: SETUP PYTHON
+            uses: actions/setup-python@v1
+            with:
+                python-version: 3.8
+        - run: pip install --user -r src/requirements.txt
+        - run: kedro test
