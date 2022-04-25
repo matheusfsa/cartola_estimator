@@ -1,4 +1,4 @@
-name: build-and-evaluate
+name: build
 on:
     push:
         branches:
