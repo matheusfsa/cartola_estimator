@@ -164,3 +164,8 @@ venv.bak/
 
 mlruns
 mydb.sqlite
+
+!data/01_raw/campeonato-brasileiro-cartoes.csv
+!data/01_raw/campeonato-brasileiro-estatisticas-full.csv
+!data/01_raw/campeonato-brasileiro-full.csv
+!data/01_raw/campeonato-brasileiro-gols.csv
