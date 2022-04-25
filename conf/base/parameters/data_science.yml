@@ -15,7 +15,7 @@ models:
       params_search:
           class: sklearn.model_selection.RandomizedSearchCV
           kwargs:
-            n_iter: 2
+            n_iter: 3
           params:
               estimator__alpha:
                 class: scipy.stats.loguniform
