@@ -39,18 +39,28 @@ feature_data:
   filepath: data/04_feature/feature_data.parquet
 
 train_data:
-  type: pandas.ParquetDataSet
-  filepath: data/04_feature/train_data.parquet
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+  data_set:
+    type: pandas.ParquetDataSet
+    filepath: data/04_feature/train_data.parquet
 
 test_data:
-  type: pandas.ParquetDataSet
-  filepath: data/04_feature/test_data.parquet
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+  data_set:
+    type: pandas.ParquetDataSet
+    filepath: data/04_feature/test_data.parquet
 
 val_data:
-  type: pandas.ParquetDataSet
-  filepath: data/04_feature/val_data.parquet
+  type: kedro_mlflow.io.artifacts.MlflowArtifactDataSet
+  data_set:
+    type: pandas.ParquetDataSet
+    filepath: data/04_feature/val_data.parquet
 
 
 cartola_estimator:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/cartola_estimator.pk
+  type: kedro_mlflow.io.models.MlflowModelLoggerDataSet
+  flavor: mlflow.sklearn
+
+validation_metrics:
+    type: kedro_mlflow.io.metrics.MlflowMetricsDataSet
+    prefix: validation

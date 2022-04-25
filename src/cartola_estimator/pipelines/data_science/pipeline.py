@@ -10,7 +10,7 @@ from itertools import product
 from kedro.pipeline import Pipeline, node
 from kedro.framework.session.session import _active_session
 from kedro.pipeline.modular_pipeline import pipeline
-from .nodes import split_x_y, join_models, model_selection
+from .nodes import split_x_y, join_models, model_selection, evaluate_cartola_estimator
 
 
 def training_template(name):
@@ -62,7 +62,7 @@ def create_pipeline(**kwargs) -> Pipeline:
     ]
     training_pipeline = reduce(add, training_pipelines)
 
-    join_pipeline = Pipeline(
+    post_processing_pipeline = Pipeline(
         [
             node(
                 func=join_models,
@@ -75,7 +75,19 @@ def create_pipeline(**kwargs) -> Pipeline:
                 ],
                 outputs="cartola_estimator",
                 name="join_models",
+            ),
+            node(
+                func=evaluate_cartola_estimator,
+                inputs={
+                    "val_data": "val_data",
+                    "cartola_estimator": "cartola_estimator",
+                    "stats_dict": "params:stats",
+                },
+                outputs="validation_metrics",
+                name="evaluation",
             )
         ]
     )
-    return training_pipeline  + join_pipeline
+
+
+    return training_pipeline  +  post_processing_pipeline

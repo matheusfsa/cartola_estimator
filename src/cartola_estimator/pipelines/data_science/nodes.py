@@ -13,10 +13,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import make_column_selector
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import mean_squared_error
 
 from cartola_estimator.utils import import_class
 from .models import CartolaEstimator
 from .transformers import DropColumns
+
 
 
 def split_x_y(
@@ -112,3 +114,24 @@ def join_models(stats_dict: Dict[str, Any], *models):
     for stat, model in zip(stats, models):
         estimators[stat] = model
     return CartolaEstimator(**estimators)
+
+def evaluate_cartola_estimator(
+    val_data: pd.DataFrame,
+    cartola_estimator: CartolaEstimator,
+    stats_dict: Dict[str, Any]):
+    stats = [stat["id"] for k, stat in stats_dict.items()]
+    X = val_data.drop(columns=stats)
+    y_stats = val_data[stats]
+    y_stats_pred = cartola_estimator.predict(X)
+    metrics = {}
+    for statistic in stats:
+        y_true = y_stats[statistic]
+        y_pred = y_stats_pred[statistic]
+
+        y_pred = y_pred[~y_true.isna()]
+        y_true = y_true[~y_true.isna()]
+
+
+        error = mean_squared_error(y_true, y_pred)
+        metrics[statistic] = {"step": 1, "value": error}
+    return metrics

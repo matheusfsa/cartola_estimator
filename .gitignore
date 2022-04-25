@@ -161,3 +161,6 @@ venv.bak/
 *.ipynb
 
 !.telemetry
+
+mlruns
+mydb.sqlite

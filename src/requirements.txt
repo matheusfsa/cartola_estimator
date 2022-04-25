@@ -20,8 +20,9 @@ scikit_learn==1.0.2
 # Progress bar
 tqdm==4.64.0
 
-# kedro viz
+# kedro
 kedro-viz==4.4.0
+kedro-mlflow==0.9.0
 
 # HTML scrapping
 bs4==0.0.1
@@ -29,3 +30,4 @@ lxml==4.8.0
 unidecode==1.3.4
 
 fake-dataset==0.0.2
+
